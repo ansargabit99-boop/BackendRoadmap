@@ -67,3 +67,5 @@ Protected routes use the header: `Authorization: Bearer <token>`
 - [ ] Use parameterized queries (`$1`, `$2`)
 - [ ] Add a global error handler
 - [ ] Secrets only in `.env`
+
+Good luck this project will be hard.I believe in you.
