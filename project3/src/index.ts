@@ -8,7 +8,7 @@ const app = express();
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
   next();
-});
+});/// here instead of writing this you can simply just install package called cors then app.use(cors())
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 app.use(express.json());
 try {
@@ -61,7 +61,7 @@ app.post("/auth/login", async (req, res) => {
     if (!matching) {
       return res.status(401).json({ error: "Invalid email or passwrod" });
     }
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!, { ///remember to put ! next to the env variables ! means trust me it exists otherwise it will throw error
       expiresIn: "1h",
     });
     res.status(200).json({ token });
@@ -70,3 +70,7 @@ app.post("/auth/login", async (req, res) => {
     res.status(500).json({ error: "server error" });
   }
 });
+
+///instead of creating token for each function register and login 
+///you can simply create another function for it like function generateToken() {
+/// return jwt.sign({id},env.process.JWT_SECRET,{expiresIn:"30d"})}
