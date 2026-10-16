@@ -8,7 +8,8 @@ const pool = new pg.Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-});
+});///also insTead of writing this you can simply do everything in one line you just write connectionString:process.env.DATABASE_URL
+///in your .env you add DATABASE_URL=postgres://your_user_name:password@host:5432/your_database_name
 app.use(express.json());
 
 try {
@@ -17,6 +18,7 @@ try {
 } catch (error) {
   console.error("Database connection failed:", error.message);
 }
+///YOU NAILED IT BUT I WILL SUGGEST YOU SOME BETTER VERSIIONS
 ////get
 app.get("/todos", async function (req, res) {
   try {
@@ -30,7 +32,7 @@ app.get("/todos", async function (req, res) {
 ////post
 app.post("/todos", async (req, res) => {
   try {
-    const body = req.body;
+    const body = req.body; /// THERE SHOULD BE VALIDATION LIKE if(!body.title || !body.description) {res.status(400).json({message:"invalid body"})}
     console.log(body.title);
     console.log(body.description);
     const result = await pool.query(
@@ -69,7 +71,7 @@ app.get("/todos/:id", async (req, res) => {
 app.put("/todos/:id", async (req, res) => {
   try {
     const id = Number(req.params.id);
-    const body = req.body;
+    const body = req.body; /// here you also need validation 
     if (!Number.isInteger(id) || id <= 0) {
       return res.status(400).json({ error: "Invalid ID" });
     }
@@ -85,7 +87,9 @@ app.put("/todos/:id", async (req, res) => {
     console.log(error);
     res.status(500).json({ error: "Server error" });
   }
-});
+});///it is correct you even did it better 
+///also you can make it dynamic for example if user only wwants to change one thing then change only this thing 
+///you can ask ai for that it will be big help in the future
 /////
 app.delete("/todos/:id", async (req, res) => {
   try {
@@ -113,3 +117,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+
+///OVERALL good job with this you learned core basics of backend 
+
