@@ -94,7 +94,7 @@ app.get("/todos/:id", async (req, res) => {
   if (!Number.isInteger(id) || id <= 0) {
     return res.status(400).json({ error: "Invalid ID" });
   }
-
+////that
   const authheader = req.headers.authorization;
   if (!authheader || !authheader.startsWith("Bearer ")) {
     return res.status(401).json({ error: "No token provided" });
@@ -109,6 +109,13 @@ app.get("/todos/:id", async (req, res) => {
   if (typeof checked === "string") {
     return res.status(401).json({ error: "Invalud token" });
   }
+///that
+///the code between that can be used as one function middleware your version is also correct
+///but imagine writing it every time you make request like delete get post etc
+/// instead create one fucntion called middleware then when making request you just 
+///app.get("/todos",middleware,async(req,res)=>{
+/// ...you code here 
+//}))
   const userId = checked.id;
   if (!userId) {
     return res.status(401).json({ error: "No token provided" });
