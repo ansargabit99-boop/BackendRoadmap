@@ -91,21 +91,39 @@ app.post("/auth/login", async (req, res) => {
   }
 });
 
-///////////get tasks
-app.get("/boards/:id/tasks", async (req, res) => {
+//////////ceate board
+app.post("/boards", async (req, res) => {
   try {
-    const boardID = Number(req.params.id);
-
-    const result = await pool.query("SELECT * FROM tasks WHERE board_id = $1", [
-      boardID,
-    ]);
-
-    res.status(200).json(result.rows);
+    const body = req.body;
+    if (!body.title) {
+      res.status(400).json({ error: "Title is required" });
+    }
+    const ownerID = 1;
+    const result = await pool.query(
+      "INSERT INTO boards (title, owner_id) VALUES ($1, $2) RETURNING *",
+      [body.title, ownerID],
+    );
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to load tasks" });
+    res.status(500).json({ error: "Login failed" });
   }
 });
+
+// ///////////get tasks
+// app.get("/boards/:id/tasks", async (req, res) => {
+//   try {
+//     const boardID = Number(req.params.id);
+
+//     const result = await pool.query("SELECT * FROM tasks WHERE board_id = $1", [
+//       boardID,
+//     ]);
+
+//     res.status(200).json(result.rows);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Failed to load tasks" });
+//   }
+// });
 
 //////////////
 app.listen(3000, () => {
