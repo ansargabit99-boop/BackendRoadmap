@@ -12,7 +12,7 @@ app.use(express.json());
 const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
 });
-
+////DONT FORGET TO CREATE FUNCTION FOR MIDDLEWARE
 /////////register
 app.post("/auth/register", async (req, res) => {
   try {
